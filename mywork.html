@@ -98,7 +98,6 @@
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
     }
 
-    /* Reused animation from About section */
     @keyframes slideFadeIn {
       0% { opacity: 0; transform: translateY(50px) scale(0.95); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -113,7 +112,6 @@
       animation: slideFadeOut 0.5s ease forwards;
     }
 
-    /* Modal Styles */
     .modal {
       display: none;
       position: fixed;
@@ -155,6 +153,11 @@
       font-size: 22px;
     }
 
+    .info-panel a {
+      color: #4da3ff;
+      text-decoration: underline;
+    }
+
     .close-btn {
       position: absolute;
       top: 20px;
@@ -185,27 +188,46 @@
     <h1>My Work</h1>
     <div class="gallery">
 
-      <div class="photo-box" onclick="openModal('https://i.postimg.cc/90Qhn4yZ/youtube-thumbnail-less-glitch.png', '💡 My New Project thumbnail created in Photoshop. Includes bold text, blue glow, and gradient background.')">
+      <div class="photo-box" onclick="openModal(
+        'https://i.postimg.cc/90Qhn4yZ/youtube-thumbnail-less-glitch.png', 
+        'I designed this thumbnail as a creative project inspired by the YouTuber <strong>Blissolic</strong>. It was based on their video titled <strong>“Daquavis Got Caught Cheating Against Dream?”</strong>. My goal was to replicate the same engaging style and dynamic tone of Blissolic’s content while adding my own creative perspective. You can watch the original video here: <a href=&quot;https://www.youtube.com/watch?v=aDkjttfCLpI&quot; target=&quot;_blank&quot;>Click Here to Watch on YouTube</a>.'
+      )">
         <img src="https://i.postimg.cc/90Qhn4yZ/youtube-thumbnail-less-glitch.png" alt="Thumbnail" />
       </div>
 
-      <div class="photo-box" onclick="openModal('https://i.postimg.cc/9MJdhSwK/azooz-forgive-me.png', '💡 My New Project thumbnail created in Photoshop. Includes bold text, blue glow, and gradient background.')">
+      <div class="photo-box" onclick="openModal(
+        'https://i.postimg.cc/9MJdhSwK/azooz-forgive-me.png', 
+        'I created this thumbnail as a creative project inspired by the YouTuber <strong>AZOOZ</strong>. It was based on their video titled <strong>“I AM SORRY !! @Saloniyaapa”</strong>. My aim was to capture the same emotional tone and stylistic energy of the original while incorporating my personal design touch. You can watch the original video here: <a href=&quot;https://www.youtube.com/watch?v=7rZ2R7s39uQ&amp;t=1s&quot; target=&quot;_blank&quot;>Click Here to Watch on YouTube</a>.'
+      )">
         <img src="https://i.postimg.cc/9MJdhSwK/azooz-forgive-me.png" alt="Thumbnail" />
       </div>
 
-      <div class="photo-box" onclick="openModal('https://i.postimg.cc/QCzcBTbq/Azooz-2.png', '💡 My New Project thumbnail created in Photoshop. Includes bold text, blue glow, and gradient background.')">
-        <img src="https://i.postimg.cc/QCzcBTbq/Azooz-2.png" alt="Thumbnail" />
-      </div>
+      <div class="photo-box" onclick="openModal(
+  'https://i.postimg.cc/QCzcBTbq/Azooz-2.png', 
+  'I designed this thumbnail as a creative project inspired by the YouTuber <strong>AZOOZ</strong>. It draws inspiration from their video titled <strong>“SEJAL EXX – DARK HUMOR OR CRINGE QUEEN OF INSTAGRAM?”</strong>. My objective was to replicate the engaging style and visual impact of the original while incorporating my own creative perspective. You can view the original video here:<a href=&quot;https://www.youtube.com/watch?v=9wJPbOUvbjw&quot; target=&quot;_blank&quot;>Click Here to Watch on YouTube</a>.'
+)">
+  <img src="https://i.postimg.cc/QCzcBTbq/Azooz-2.png" alt="Thumbnail" />
+</div>
 
-      <div class="photo-box" onclick="openModal('https://i.postimg.cc/KcpPp62g/Dhruv-Rathee.png', '💡 My New Project thumbnail created in Photoshop. Includes bold text, blue glow, and gradient background.')">
+
+<div class="photo-box" onclick="openModal(
+  'https://i.postimg.cc/KcpPp62g/Dhruv-Rathee.png', 
+  'I created this thumbnail inspired by <strong>Dhruv Rathee’s</strong> video titled <strong>“Reality of Indian Beggars | India’s Darkest Secret | Dhruv Rathee.”</strong> The woman depicted was based on a real photograph I took of a beggar, which I then turned into a cartoon-style image using AI. The man featured in the thumbnail was generated using ChatGPT’s AI image tools. Here’s the video link for reference: <a href=&quot;https://www.youtube.com/watch?v=pmwM5M3ivi0&t=118s&quot; target=&quot;_blank&quot;>Click here to watch on YouTube</a>.'
+)">
         <img src="https://i.postimg.cc/KcpPp62g/Dhruv-Rathee.png" alt="Thumbnail" />
       </div>
 
-      <div class="photo-box" onclick="openModal('https://i.postimg.cc/BQdx42tS/New-Project.png', '💡 My New Project thumbnail created in Photoshop. Includes bold text, blue glow, and gradient background.')">
+      <div class="photo-box" onclick="openModal(
+  'https://i.postimg.cc/BQdx42tS/New-Project.png', 
+  'I created this thumbnail as part of a creative project inspired by the YouTuber <strong>Glowkus</strong>. It takes inspiration from their video titled <strong>“Tirth Parsana Just Ended His Career 💀”</strong>. My aim was to capture the engaging style and visual impact of the original while adding my own unique creative touch. You can watch the original video here: <a href=&quot;https://www.youtube.com/watch?v=_At96Zd0Wnw&amp;t=314s&quot; target=&quot;_blank&quot;>Click here to watch on YouTube</a>.'
+)">
         <img src="https://i.postimg.cc/BQdx42tS/New-Project.png" alt="Thumbnail" />
       </div>
 
-      <div class="photo-box" onclick="openModal('https://i.postimg.cc/7Z0S6bTg/Untitled-1.png', '💡 My New Project thumbnail created in Photoshop. Includes bold text, blue glow, and gradient background.')">
+      <div class="photo-box" onclick="openModal(
+  'https://i.postimg.cc/7Z0S6bTg/Untitled-1.png', 
+  'I created this thumbnail as part of a creative project inspired by the YouTuber <strong>PC Builder Bangladesh</strong>. It draws inspiration from their video titled <strong>“ROG Gaming PC Build 2025 | Ft. 9950X3D & RTX 5090 32GB.”</strong> My goal was to capture the engaging style and visual impact of the original while adding my own unique creative perspective. You can watch the original video here: <a href=&quot;https://www.youtube.com/watch?v=oSqjgJ_Ygl0&quot; target=&quot;_blank&quot;>Click here to watch on YouTube</a>.'
+)">
         <img src="https://i.postimg.cc/7Z0S6bTg/Untitled-1.png" alt="Thumbnail" />
       </div>
 
@@ -226,9 +248,9 @@
 </div>
 
 <script>
-  function openModal(imageSrc, infoText) {
+  function openModal(imageSrc, infoHTML) {
     document.getElementById('modalImg').src = imageSrc;
-    document.getElementById('thumbnailInfo').textContent = infoText;
+    document.getElementById('thumbnailInfo').innerHTML = infoHTML;
     document.getElementById('thumbnailModal').style.display = 'flex';
   }
 
