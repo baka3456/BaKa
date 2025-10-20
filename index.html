@@ -3,40 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alvi</title>
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/QCJ2XbH4/cat-cat-meme-unscreen.gif">
+  <title>Alvi - Creative Portfolio</title>
+  <link rel="icon" type="image/gif" href="https://i.postimg.cc/QCJ2XbH4/cat-cat-meme-unscreen.gif">
   <style>
-    body, html {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
       height: 100%;
-      font-family: 'Segoe UI', sans-serif;
-      background: url("https://i.postimg.cc/prk6zCr8/download-1.gif") no-repeat center center fixed;
-      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
       overflow: hidden;
     }
 
-    .overlay,
-    .blur-bg {
+    .page {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("https://i.postimg.cc/prk6zCr8/download-1.gif") no-repeat center center fixed;
+      background-size: cover;
       z-index: 0;
     }
 
     .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
     }
 
-    .blur-bg {
+    .blur-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       backdrop-filter: blur(5px);
       background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
       display: none;
     }
 
+    .blur-overlay.active {
+      display: block;
+    }
+
+    /* Menu Styles */
     .menu {
       position: absolute;
       left: 250px;
@@ -46,20 +79,7 @@
       display: flex;
       flex-direction: column;
       gap: 30px;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .menu.animate-in {
       animation: fadeSlideIn 0.8s ease forwards;
-    }
-
-    @keyframes fadeSlideIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .menu button {
@@ -73,12 +93,11 @@
       padding: 15px 30px;
       letter-spacing: 20px;
       transition: font-weight 0.2s ease, text-shadow 0.2s ease;
+      position: relative;
     }
 
-    .menu button:hover,
-    .menu button.active {
+    .menu button:hover {
       font-weight: bold;
-      position: relative;
       text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
     }
 
@@ -93,16 +112,7 @@
       background: white;
     }
 
-    @keyframes slideFadeIn {
-      0% { opacity: 0; transform: translateY(50px) scale(0.95); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    @keyframes slideFadeOut {
-      0% { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(50px) scale(0.95); }
-    }
-
+    /* Back Button */
     .back-button {
       position: fixed;
       top: 20px;
@@ -114,9 +124,15 @@
       border-radius: 8px;
       font-size: 18px;
       font-weight: 500;
-      z-index: 3;
+      z-index: 30;
       transition: background 0.3s, transform 0.2s;
+      cursor: pointer;
+      border: none;
       display: none;
+    }
+
+    .back-button.active {
+      display: block;
     }
 
     .back-button:hover {
@@ -124,23 +140,33 @@
       transform: scale(1.05);
     }
 
+    /* Content Container */
     .content {
       position: relative;
-      z-index: 1;
+      z-index: 10;
       padding: 40px;
       max-width: 1200px;
       margin: 0 auto;
-      display: none;
       animation: slideFadeIn 0.8s ease;
-      color: black;
+      overflow-y: auto;
+      height: 100%;
     }
 
-    h1 {
-      font-size: 48px;
-      margin-top: 20px;
-      text-align: center;
+    .content.slide-out {
+      animation: slideFadeOut 0.5s ease forwards;
     }
 
+    /* Glass Panel */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    /* About Page Styles */
     .info-section {
       display: flex;
       align-items: center;
@@ -161,18 +187,27 @@
       max-width: 600px;
     }
 
+    .text-container h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
     .text-container p {
       font-size: 20px;
       line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .bottom-info-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      margin-top: 60px;
     }
 
     .info-list {
       flex: 1;
-      margin-top: 40px;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
       min-width: 280px;
     }
 
@@ -186,22 +221,16 @@
       list-style: none;
       padding: 0;
       font-size: 18px;
-      max-width: 800px;
-      margin: 0 auto;
     }
 
     .info-list ul li {
       margin: 10px 0;
       padding-left: 20px;
-      position: relative;
     }
 
     .basic-info {
-      list-style: none;
-      padding: 0;
-      margin: 0;
       display: grid;
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: auto 1fr;
       row-gap: 12px;
       column-gap: 15px;
     }
@@ -213,209 +242,14 @@
     .basic-info span {
       font-weight: 500;
       opacity: 0.9;
-      white-space: nowrap;
     }
 
     .basic-info strong {
       font-weight: 600;
-      white-space: normal;
     }
 
-    .bottom-info-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 30px;
-      justify-content: center;
-      margin-top: 60px;
-    }
-
-    @media (max-width: 768px) {
-      .menu {
-        left: 50%;
-        transform: translate(-50%, -50%);
-        align-items: center;
-      }
-
-      .info-section {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .bottom-info-container {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .basic-info {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .basic-info span,
-      .basic-info strong {
-        display: block;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="overlay"></div>
-  <div class="blur-bg" id="blurBg"></div>
-
-  <a href="#" class="back-button" id="backBtn">⟵ Back</a>
-
-  <div class="menu animate-in" id="menu">
-    <button class="active">Home</button>
-    <button id="aboutBtn">About</button>
-    <button id="myWorkBtn">My Work</button>
-    <button onclick="window.location.href='contacts.html'">Contacts</button>
-  </div>
-
-  <div class="content" id="aboutContent">
-    <div class="info-section">
-      <div class="gif-container">
-        <img src="https://i.postimg.cc/XY8S71TR/cat-cat-meme.gif" alt="GIF">
-      </div>
-      <div class="text-container">
-        <h1>Hello! I'm Alvi.</h1>
-        <p>
-          I love creating fun and engaging projects, especially ones that involve games, design, or interactivity. This site is a place where I share my work and ideas.
-        </p>
-        <p>
-          Whether you're here to explore or collaborate, feel free to look around and connect. Let's build something cool together!
-        </p>
-      </div>
-    </div>
-
-    <div class="bottom-info-container">
-      <div class="info-list">
-        <h2>More About Me</h2>
-        <ul>
-          <li>💻 Passionate about web and game development</li>
-          <li>🎮 Enjoys Minecraft and creating mods</li>
-          <li>🖌️ Loves designing clean and creative interfaces</li>
-          <li>📚 Always learning new coding skills</li>
-          <li>📷 Into photo editing and animation projects</li>
-          <li>🤝 Open for collaborations and ideas</li>
-        </ul>
-      </div>
-
-      <div class="info-list">
-        <h2>Basic Info</h2>
-        <ul class="basic-info">
-          <li><span>👤 Name</span><strong>: Alvi</strong></li>
-          <li><span>🎂 Age</span><strong>: 17</strong></li>
-          <li><span>🌍 Nationality</span><strong>: Bangladeshi</strong></li>
-          <li><span>🕌 Religion</span><strong>: Islam</strong></li>
-          <li><span>📍 Location</span><strong>: Dhaka, Bangladesh</strong></li>
-          <li><span>✨ Hobbies</span><strong>: Gaming, UI Designing, Coding, Anime, Photo Editing</strong></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const menu = document.getElementById('menu');
-    const aboutBtn = document.getElementById('aboutBtn');
-    const aboutContent = document.getElementById('aboutContent');
-    const backBtn = document.getElementById('backBtn');
-    const blurBg = document.getElementById('blurBg');
-    const myWorkBtn = document.getElementById('myWorkBtn');
-
-    aboutBtn.addEventListener('click', () => {
-      menu.style.display = 'none';
-      blurBg.style.display = 'block';
-      backBtn.style.display = 'block';
-      aboutContent.style.display = 'block';
-      aboutContent.style.animation = 'slideFadeIn 0.8s ease';
-    });
-
-    backBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      aboutContent.style.animation = 'slideFadeOut 0.5s ease forwards';
-      aboutContent.addEventListener('animationend', () => {
-        aboutContent.style.display = 'none';
-        backBtn.style.display = 'none';
-        blurBg.style.display = 'none';
-        menu.style.display = 'flex';
-        menu.classList.add('animate-in');
-      }, { once: true });
-    });
-
-    myWorkBtn.addEventListener('click', () => {
-      window.location.href = "mywork.html";
-    });
-  </script>
-</body>
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact - Alvi</title>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Segoe UI', sans-serif;
-      background: url("https://i.postimg.cc/prk6zCr8/download-1.gif") no-repeat center center fixed;
-      background-size: cover;
-      color: white;
-      overflow: hidden;
-    }
-
-    .overlay,
-    .blur-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
-
-    .overlay {
-      background: rgba(0, 0, 0, 0.4);
-    }
-
-    .blur-bg {
-      backdrop-filter: blur(5px);
-      background: rgba(0, 0, 0, 0.4);
-    }
-
-    .back-button {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
-      text-decoration: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-size: 18px;
-      font-weight: 500;
-      z-index: 3;
-      transition: background 0.3s, transform 0.2s;
-    }
-
-    .back-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.05);
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-      padding: 40px;
-      max-width: 1000px;
-      margin: 0 auto;
-      animation: slideFadeIn 0.8s ease;
-    }
-
-    .slide-fade-out {
-      animation: slideFadeOut 0.6s ease forwards;
-    }
-
-    h1 {
+    /* Contact Page Styles */
+    .contact-content h1 {
       font-size: 48px;
       text-align: center;
       margin-bottom: 40px;
@@ -426,6 +260,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 30px;
+      margin-top: 40px;
     }
 
     .social-button {
@@ -461,135 +296,627 @@
       text-align: center;
       font-size: 22px;
       font-weight: 500;
-      white-space: nowrap;
-    }
-
-    .typing {
-      display: inline-block;
-      border-right: 2px solid white;
-      white-space: nowrap;
-      overflow: hidden;
-      width: 0;
-      animation: typing 4s steps(40, end) forwards, blink 0.8s step-end infinite;
-    }
-
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 22ch; }
-    }
-
-    @keyframes blink {
-      from, to { border-color: transparent; }
-      50% { border-color: white; }
-    }
-
-    @keyframes slideFadeIn {
-      0% { opacity: 0; transform: translateY(50px) scale(0.95); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    @keyframes slideFadeOut {
-      0% { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(50px) scale(0.95); }
-    }
-
-    @media (max-width: 768px) {
-      .social-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .email-section {
-        font-size: 18px;
-      }
     }
 
     .label {
       display: inline-block;
       min-width: 70px;
     }
+
+    .cursor {
+      animation: blink 0.8s step-end infinite;
+    }
+
+    /* Work Page Styles */
+    .work-content h1 {
+      font-size: 48px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .work-content p {
+      text-align: center;
+      font-size: 18px;
+      color: #ccc;
+      margin-bottom: 25px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .photo-box {
+      position: relative;
+      width: 250px;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .photo-box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+    }
+
+    .photo-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+      animation: slideFadeIn 0.3s ease-in-out;
+    }
+
+    .modal-content {
+      display: flex;
+      flex-wrap: wrap;
+      background: #111;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 90%;
+      max-height: 90%;
+      overflow: auto;
+      position: relative;
+    }
+
+    .modal img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-right: 20px;
+      max-height: 80vh;
+    }
+
+    .info-panel {
+      color: #ddd;
+      max-width: 300px;
+    }
+
+    .info-panel h2 {
+      margin-top: 0;
+      font-size: 22px;
+      color: white;
+    }
+
+    .info-panel a {
+      color: #4da3ff;
+      text-decoration: underline;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+      z-index: 51;
+    }
+    .page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 5; /* Add this line */
+}
+    /* Animations */
+    @keyframes fadeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes slideFadeOut {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+      }
+    }
+
+    @keyframes blink {
+      from, to {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .menu {
+        left: 50%;
+        transform: translate(-50%, -50%);
+        align-items: center;
+      }
+
+      .info-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .bottom-info-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .basic-info {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .basic-info span,
+      .basic-info strong {
+        display: block;
+      }
+
+      .social-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .photo-box {
+        width: 90%;
+      }
+
+      .modal-content {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .modal img {
+        margin: 0 0 20px 0;
+      }
+
+      .info-panel {
+        text-align: center;
+      }
+
+      .text-container h1 {
+        font-size: 32px;
+      }
+    }
+    /* From Uiverse.io by kennyotsu */ 
+/* From Uiverse.io by kennyotsu */ 
+.card {
+  /* color used to softly clip top and bottom of the .words container */
+  --bg-color: #111;
+  background-color: var(--bg-color);
+  padding: 1rem 2rem;
+  border-radius: 1.25rem;
+}
+.loader-content p {
+  font-size: 28px;
+  display: flex;          /* Align text and words horizontally */
+  align-items: center;    /* Vertically center the words with "Loading" */
+  gap: 8px;               /* space between "Loading" and rotating word */
+}
+
+.words {
+  display: inline-block;
+  overflow: hidden;
+  height: 1em;            /* match font size of surrounding text */
+  position: relative;
+}
+
+.word {
+  display: block;
+  color: #956afa;
+  animation: spin_4991 4s linear infinite;
+}
+
+@keyframes spin_4991 {
+  0%, 20%   { transform: translateY(0); }
+  25%, 45%  { transform: translateY(-100%); }
+  50%, 70%  { transform: translateY(-200%); }
+  75%, 95%  { transform: translateY(-300%); }
+  100%      { transform: translateY(0); }
+}
+html, body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 768px) {
+  .content {
+    margin-top: 60px;
+  }
+}
+.menu button {
+  padding: 20px 40px;
+  font-size: 26px;
+  letter-spacing: 10px;
+}
+
+
+
   </style>
 </head>
+<div id="loader">
+  <div class="loader-content">
+    <p>Loading <span class="words">
+      <span class="word">buttons</span>
+      <span class="word">forms</span>
+      <span class="word">text</span>
+      <span class="word">images</span>
+      <span class="word">links</span>
+    </span></p>
+  </div>
+</div>
+
+  </div>
+</div>
 <body>
+  <!-- Background -->
+  <div class="background"></div>
   <div class="overlay"></div>
-  <div class="blur-bg"></div>
+  <div class="blur-overlay" id="blurOverlay"></div>
 
-  <a href="index.html" class="back-button">⟵ Back</a>
+  <!-- Back Button -->
+  <button class="back-button" id="backBtn">⟵ Back</button>
 
-  <div class="content" id="pageContent">
-    <h1>Contact Me</h1>
-    <div class="social-buttons">
-      <a class="social-button" href="https://discord.com" target="_blank">
-        <img src="https://i.postimg.cc/vZPDGVQq/pngimg-com-discord-PNG3.png" alt="Discord" />
-        Discord
-      </a>
-      <a class="social-button" href="https://twitter.com" target="_blank">
-        <img src="https://i.postimg.cc/zDSzJg7C/Logo-of-Twitter-svg.png" alt="Twitter" />
-        Twitter (X)
-      </a>
-      <a class="social-button" href="https://youtube.com" target="_blank">
-        <img src="https://i.postimg.cc/DfghVKf5/social-06-512.webp" alt="YouTube" />
-        YouTube
-      </a>
-      <a class="social-button" href="https://instagram.com" target="_blank">
-        <img src="https://i.postimg.cc/KYBXJ6sP/Instagram-logo-2022-svg.webp" alt="Instagram" />
-        Instagram
-      </a>
-      <a class="social-button" href="https://tiktok.com" target="_blank">
-        <img src="https://i.postimg.cc/ZqrgrrCj/Social-media-Tiktok-512.webp" alt="TikTok" />
-        TikTok
-      </a>
+  <!-- Home Page -->
+  <div class="page active" id="homePage">
+    <div class="menu" id="menu">
+      <button class="active" onclick="showPage('home')">HOME</button>
+      <button onclick="showPage('about')">ABOUT</button>
+      <button onclick="showPage('work')">MY WORK</button>
+      <button onclick="showPage('contact')">CONTACTS</button>
     </div>
+  </div>
 
-    <div class="email-section">
-      <span class="label">Email:</span>
-      <span class="animated-text"></span><span class="cursor">|</span>
+  <!-- About Page -->
+  <div class="page" id="aboutPage">
+    <div class="content">
+      <div class="info-section">
+        <div class="gif-container">
+          <img src="https://i.postimg.cc/XY8S71TR/cat-cat-meme.gif" alt="Profile GIF">
+        </div>
+        <div class="text-container">
+          <h1>Hello! I'm Alvi.</h1>
+          <p>
+            I love creating fun and engaging projects, especially ones that involve games, design, or interactivity. This site is a place where I share my work and ideas.
+          </p>
+          <p>
+            Whether you're here to explore or collaborate, feel free to look around and connect. Let's build something cool together!
+          </p>
+        </div>
+      </div>
+
+      <div class="bottom-info-container">
+        <div class="info-list glass-panel">
+          <h2>More About Me</h2>
+          <ul>
+            <li>💻 Passionate about web and game development</li>
+            <li>🎮 Enjoys Minecraft and creating mods</li>
+            <li>🖌️ Loves designing clean and creative interfaces</li>
+            <li>📚 Always learning new coding skills</li>
+            <li>📷 Into photo editing and animation projects</li>
+            <li>🤝 Open for collaborations and ideas</li>
+          </ul>
+        </div>
+
+        <div class="info-list glass-panel">
+          <h2>Basic Info</h2>
+          <ul class="basic-info">
+            <li><span>👤 Name</span><strong>: Alvi</strong></li>
+            <li><span>🎂 Age</span><strong>: 17</strong></li>
+            <li><span>🌍 Nationality</span><strong>: Bangladeshi</strong></li>
+            <li><span>🕌 Religion</span><strong>: Islam</strong></li>
+            <li><span>📍 Location</span><strong>: Dhaka, Bangladesh</strong></li>
+            <li><span>✨ Hobbies</span><strong>: Gaming, UI Designing, Coding, Anime, Photo Editing</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Page -->
+  <div class="page" id="contactPage">
+    <div class="content contact-content">
+      <h1>Contact Me</h1>
+      <div class="social-buttons">
+        <a class="social-button" href="https://discord.com/users/1280046690182631428" target="_blank">
+          <img src="https://i.postimg.cc/vZPDGVQq/pngimg-com-discord-PNG3.png" alt="Discord" />
+          Discord
+        </a>
+        <a class="social-button" href="https://twitter.com" target="_blank">
+          <img src="https://i.postimg.cc/zDSzJg7C/Logo-of-Twitter-svg.png" alt="Twitter" />
+          Twitter (X)
+        </a>
+        <a class="social-button" href="https://youtube.com" target="_blank">
+          <img src="https://i.postimg.cc/DfghVKf5/social-06-512.webp" alt="YouTube" />
+          YouTube
+        </a>
+        <a class="social-button" href="https://instagram.com" target="_blank">
+          <img src="https://i.postimg.cc/KYBXJ6sP/Instagram-logo-2022-svg.webp" alt="Instagram" />
+          Instagram
+        </a>
+        <a class="social-button" href="https://tiktok.com" target="_blank">
+          <img src="https://i.postimg.cc/ZqrgrrCj/Social-media-Tiktok-512.webp" alt="TikTok" />
+          TikTok
+        </a>
+      </div>
+
+      <div class="email-section">
+        <span class="label">Email:</span>
+        <span id="typedEmail"></span><span class="cursor">|</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Work Page -->
+  <div class="page" id="workPage">
+    <div class="content work-content">
+      <h1>My Work</h1>
+      <p>Click on the thumbnail to view it in full size and read its details.</p>
+      <div class="gallery" id="gallery"></div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="thumbnailModal">
+    <span class="close-btn" onclick="closeModal()">×</span>
+    <div class="modal-content">
+      <img id="modalImg" src="" alt="Thumbnail" />
+      <div class="info-panel">
+        <h2 id="modalTitle">Thumbnail Info</h2>
+        <p id="thumbnailInfo"></p>
+      </div>
     </div>
   </div>
 
   <script>
-    // Typing effect
-    const phrases = ["alvi312@gmail.comm"];
-    const typingElement = document.querySelector(".animated-text");
-    let currentPhraseIndex = 0;
-    let currentCharIndex = 0;
-    let isDeleting = false;
-
-    function typeEffect() {
-      const currentPhrase = phrases[currentPhraseIndex];
-      if (isDeleting) {
-        currentCharIndex--;
-        if (currentCharIndex === 0) {
-          isDeleting = false;
-        }
-      } else {
-        currentCharIndex++;
-        if (currentCharIndex === currentPhrase.length) {
-          isDeleting = true;
-          setTimeout(typeEffect, 1200);
-          return;
-        }
+    // Work items data
+    const workItems = [
+      {
+        image: "https://i.postimg.cc/90Qhn4yZ/youtube-thumbnail-less-glitch.png",
+        title: "Blissolic Inspired Thumbnail",
+        description: 'I designed this thumbnail as a creative project inspired by the YouTuber <strong>Blissolic</strong>. It was based on their video titled <strong>"Daquavis Got Caught Cheating Against Dream?"</strong>. My goal was to replicate the same engaging style and dynamic tone of Blissolic\'s content while adding my own creative perspective. You can watch the original video here: <a href="https://www.youtube.com/watch?v=aDkjttfCLpI" target="_blank">Click Here to Watch on YouTube</a>.'
+      },
+      {
+        image: "https://i.postimg.cc/9MJdhSwK/azooz-forgive-me.png",
+        title: "AZOOZ Inspired - Apology",
+        description: 'I created this thumbnail as a creative project inspired by the YouTuber <strong>AZOOZ</strong>. It was based on their video titled <strong>"I AM SORRY !! @Saloniyaapa"</strong>. My aim was to capture the same emotional tone and stylistic energy of the original while incorporating my personal design touch. You can watch the original video here: <a href="https://www.youtube.com/watch?v=7rZ2R7s39uQ&t=1s" target="_blank">Click Here to Watch on YouTube</a>.'
+      },
+      {
+        image: "https://i.postimg.cc/QCzcBTbq/Azooz-2.png",
+        title: "AZOOZ Inspired - Dark Humor",
+        description: 'I designed this thumbnail as a creative project inspired by the YouTuber <strong>AZOOZ</strong>. It draws inspiration from their video titled <strong>"SEJAL EXX – DARK HUMOR OR CRINGE QUEEN OF INSTAGRAM?"</strong>. My objective was to replicate the engaging style and visual impact of the original while incorporating my own creative perspective. You can view the original video here: <a href="https://www.youtube.com/watch?v=9wJPbOUvbjw" target="_blank">Click Here to Watch on YouTube</a>.'
+      },
+      {
+        image: "https://i.postimg.cc/KcpPp62g/Dhruv-Rathee.png",
+        title: "Dhruv Rathee Inspired",
+        description: 'I created this thumbnail inspired by <strong>Dhruv Rathee\'s</strong> video titled <strong>"Reality of Indian Beggars | India\'s Darkest Secret | Dhruv Rathee."</strong> The woman depicted was based on a real photograph I took of a beggar, which I then turned into a cartoon-style image using AI. The man featured in the thumbnail was generated using ChatGPT\'s AI image tools. Here\'s the video link for reference: <a href="https://www.youtube.com/watch?v=pmwM5M3ivi0&t=118s" target="_blank">Click here to watch on YouTube</a>.'
+      },
+      {
+        image: "https://i.postimg.cc/BQdx42tS/New-Project.png",
+        title: "Glowkus Inspired",
+        description: 'I created this thumbnail as part of a creative project inspired by the YouTuber <strong>Glowkus</strong>. It takes inspiration from their video titled <strong>"Tirth Parsana Just Ended His Career 💀"</strong>. My aim was to capture the engaging style and visual impact of the original while adding my own unique creative touch. You can watch the original video here: <a href="https://www.youtube.com/watch?v=_At96Zd0Wnw&t=314s" target="_blank">Click here to watch on YouTube</a>.'
+      },
+      {
+        image: "https://i.postimg.cc/7Z0S6bTg/Untitled-1.png",
+        title: "PC Builder Bangladesh Inspired",
+        description: 'I created this thumbnail as part of a creative project inspired by the YouTuber <strong>PC Builder Bangladesh</strong>. It draws inspiration from their video titled <strong>"ROG Gaming PC Build 2025 | Ft. 9950X3D & RTX 5090 32GB."</strong> My goal was to capture the engaging style and visual impact of the original while adding my own unique creative perspective. You can watch the original video here: <a href="https://www.youtube.com/watch?v=oSqjgJ_Ygl0" target="_blank">Click here to watch on YouTube</a>.'
+      },
+      {
+        image: "https://i.postimg.cc/T1Q9yXkM/Untitle2ed-1.png",
+        title: "Crystal PvP Thumbnail",
+        description: 'I created this thumbnail about a year ago after coming across a YouTube video featuring a YouTuber doing crystal PvP with Marlowww. Inspired by their style, I decided to design my own version, incorporating elements of my own creativity. Unfortunately, I no longer remember the name of that YouTuber and have been unable to locate the original video.'
       }
+    ];
 
-      typingElement.textContent = currentPhrase.substring(0, currentCharIndex);
-      setTimeout(typeEffect, isDeleting ? 60 : 100);
+    // Initialize gallery
+    function initGallery() {
+      const gallery = document.getElementById('gallery');
+      workItems.forEach((item, index) => {
+        const photoBox = document.createElement('div');
+        photoBox.className = 'photo-box';
+        photoBox.onclick = () => openModal(item);
+        
+        const img = document.createElement('img');
+        img.src = item.image;
+        img.alt = item.title;
+        
+        photoBox.appendChild(img);
+        gallery.appendChild(photoBox);
+      });
     }
 
-    document.addEventListener("DOMContentLoaded", typeEffect);
+    // Page navigation
+    function showPage(pageName) {
+      const pages = document.querySelectorAll('.page');
+      const menu = document.getElementById('menu');
+      const backBtn = document.getElementById('backBtn');
+      const blurOverlay = document.getElementById('blurOverlay');
+      
+      pages.forEach(page => page.classList.remove('active'));
+      
+      if (pageName === 'home') {
+        document.getElementById('homePage').classList.add('active');
+        menu.style.display = 'flex';
+        backBtn.classList.remove('active');
+        blurOverlay.classList.remove('active');
+      } else {
+        menu.style.display = 'none';
+        backBtn.classList.add('active');
+        blurOverlay.classList.add('active');
+        document.getElementById(pageName + 'Page').classList.add('active');
+        
+        if (pageName === 'contact') {
+          startTypingEffect();
+        }
+      }
+    }
 
-    // SlideFadeOut on Back button
-    document.querySelector('.back-button').addEventListener('click', function (e) {
-      e.preventDefault();
-      const content = document.getElementById("pageContent");
-      content.classList.add("slide-fade-out");
-      setTimeout(() => {
-        window.location.href = this.href;
-      }, 600);
-    });
+    // Back button
+    document.getElementById('backBtn').onclick = function() {
+      showPage('home');
+    };
+
+    // Modal functions
+    function openModal(item) {
+      const modal = document.getElementById('thumbnailModal');
+      const modalImg = document.getElementById('modalImg');
+      const modalTitle = document.getElementById('modalTitle');
+      const thumbnailInfo = document.getElementById('thumbnailInfo');
+      
+      modalImg.src = item.image;
+      modalTitle.textContent = item.title;
+      thumbnailInfo.innerHTML = item.description;
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('thumbnailModal').classList.remove('active');
+    }
+
+    // Typing effect for email
+    let typingInterval;
+    function startTypingEffect() {
+      const email = "alvi32@gmail.comm";
+      const typedEmailElement = document.getElementById('typedEmail');
+      let charIndex = 0;
+      let isDeleting = false;
+      
+      clearInterval(typingInterval);
+      typedEmailElement.textContent = '';
+      
+      function type() {
+        if (isDeleting) {
+          charIndex--;
+          if (charIndex === 0) {
+            isDeleting = false;
+          }
+        } else {
+          charIndex++;
+          if (charIndex === email.length) {
+            isDeleting = true;
+            setTimeout(type, 1200);
+            return;
+          }
+        }
+        
+        typedEmailElement.textContent = email.substring(0, charIndex);
+        setTimeout(type, isDeleting ? 60 : 100);
+      }
+      
+      type();
+    }
+
+    // Initialize on load
+    window.onload = function() {
+      initGallery();
+    };
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('thumbnailModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    };
   </script>
+  <style>body{visibility:hidden;}</style>
+
+  <!-- Loader Script -->
+<script>
+  
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+  setTimeout(() => {
+    loader.style.opacity = "0";
+    setTimeout(() => loader.style.display = "none", 600);
+  }, 1000); // wait 1s before fading out
+});
+document.body.style.visibility = "visible";
+
+</script>
+
+<!-- Loader Styles (put inside <style> or <head>) -->
+<style>
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0d0d0d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Always above everything */
+  transition: opacity 0.6s ease;
+}
+
+.loader-content {
+  text-align: center;
+  font-size: 1.5rem;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+.loader-content p {
+  font-size: 28px;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.words {
+  display: inline-block;
+  overflow: hidden;
+  height: 30px;
+  position: relative;
+}
+
+.words .word {
+  display: block;
+  animation: spin_4991 4s infinite;
+  color: #956afa;
+}
+</style>
+
 </body>
 </html>
-
-
-
-
